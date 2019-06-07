@@ -1,8 +1,11 @@
 'use strict';
 
-var HISTOGRAM_START_X = 70;
-var HISTOGRAM_START_Y = 220;
-var HISTOGRAM_HEIGHT = 150;
+var Histogram = {
+  x: 70,
+  y: 220,
+  height: 150
+};
+
 var COLUMN_WIDTH = 40;
 var BAR_GAP = 50;
 var NAME_GAP = 40;
@@ -50,16 +53,18 @@ var getMaxElement = function (arr) {
 window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx);
 
-  ctx.fillStyle = 'black';
-  ctx.font = '16px Ph Mono';
-  ctx.fillText('Ура вы победили!', 140, 35);
-  ctx.fillText('Список результатов:', 75, 50);
+  var drawText = function (text, x, y, color, font) {
 
-  ctx.fillStyle = 'black';
+    ctx.fillStyle = color || 'black';
+    ctx.font = font || '16px Ph Mono';
+    ctx.fillText(text, x, y);
+  };
+  drawText('Ура вы победили!', 140, 35);
+  drawText('Список результатов:', 95, 50);
 
   var getBlueOpacity = function () {
 
-    return 'rgba(0, 0, 255, ' + Math.random() + ')';
+    return 'rgba(0, 0, 255, ' + Math.random().toFixed(2) + ')';
   };
 
   var getColor = function (player) {
@@ -71,17 +76,17 @@ window.renderStatistics = function (ctx, players, times) {
 
   var getStartX = function (index) {
 
-    return HISTOGRAM_START_X + (NAME_GAP + BAR_GAP) * index;
+    return Histogram.x + (NAME_GAP + BAR_GAP) * index;
   };
 
   var getStartY = function (index) {
 
-    return HISTOGRAM_START_Y - ((HISTOGRAM_HEIGHT * times[index]) / maxTime);
+    return Histogram.y - ((Histogram.height * times[index]) / maxTime);
   };
 
   var getColumnHeight = function (index) {
 
-    return (HISTOGRAM_HEIGHT * times[index]) / maxTime;
+    return (Histogram.height * times[index]) / maxTime;
   };
 
   for (var i = 0; i < players.length; i++) {
