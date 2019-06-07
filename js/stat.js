@@ -91,11 +91,10 @@ window.renderStatistics = function (ctx, players, times) {
 
   for (var i = 0; i < players.length; i++) {
 
+    drawText(players[i], getStartX(i), NAME_START_Y);
     ctx.fillStyle = getColor(players[i]);
-
-    ctx.fillText(players[i], getStartX(i), NAME_START_Y);
     ctx.fillRect(getStartX(i), getStartY(i), COLUMN_WIDTH, getColumnHeight(i));
-    ctx.fillText(times[i].toFixed(), getStartX(i), getStartY(i) - INTENT);
+    drawText(times[i].toFixed(), getStartX(i), getStartY(i) - INTENT);
   }
 };
 
