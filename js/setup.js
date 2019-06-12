@@ -67,15 +67,3 @@ var showMagicians = function () {
 };
 
 showMagicians();
-
-similarList.parentNode.classList.remove('hidden');
-var test = function () {
-  for (var i = 0; i <= 100; i++) {
-    var t = getInteger(0, NAMES.length - 1);
-    console.log(t);
-    console.log(NAMES[t]);
-    console.log(SURNAMES[t]);
-  }
- console.log(NAMES.length - 1);
-};
-test();
