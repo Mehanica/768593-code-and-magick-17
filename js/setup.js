@@ -67,3 +67,5 @@ var showMagicians = function () {
 };
 
 showMagicians();
+
+similarList.parentNode.classList.remove('hidden');
