@@ -14,8 +14,8 @@ var setup = document.querySelector('.setup');
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 var userIcon = document.querySelector('.setup-open');
-var buttonClose = document.querySelector('.setup-close');
-var inputUserName = document.querySelector('.setup-user-name');
+var buttonClose = setup.querySelector('.setup-close');
+var inputUserName = setup.querySelector('.setup-user-name');
 var isInputUserNameFocused = false;
 var wizard = document.querySelector('.setup-wizard');
 var wizardCoat = wizard.querySelector('.wizard-coat');
@@ -79,18 +79,9 @@ showMagicians();
 
 similarList.parentNode.classList.remove('hidden');
 
-var inputUserNameFocusChangeHandler = function () {
-
-  isInputUserNameFocused = !isInputUserNameFocused;
-};
-
-inputUserName.addEventListener('focus', inputUserNameFocusChangeHandler);
-
-inputUserName.addEventListener('blur', inputUserNameFocusChangeHandler);
-
 var EscPressHandler = function (evt) {
 
-  if (evt.keyCode === ESC_KEYCODE && !isInputUserNameFocused) {
+  if (evt.keyCode === ESC_KEYCODE && !evt.target.classList.contains('setup-user-name')) {
     closeSettingsWindow();
   }
 };
