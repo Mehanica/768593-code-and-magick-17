@@ -145,3 +145,110 @@ var fireballClickHandler = function () {
 wizardCoat.addEventListener('click', wizardCoatClickHandler);
 wizardEyes.addEventListener('click', wizardEyesClickHandler);
 fireball.addEventListener('click', fireballClickHandler);
+
+// dialog.js
+
+var dialog = setup.querySelector('.upload');
+
+var dialogMousedownHandler = function (onEvt) {
+
+  onEvt.preventDefault();
+
+  var startCoordinates = {
+    x: onEvt.clientX,
+    y: onEvt.clientY
+  };
+
+  var dragged = false;
+
+  var dialogMousemoveHandler = function (moveEvt) {
+
+    moveEvt.preventDefault();
+    dragged = true;
+
+    var shift = {
+      x: startCoordinates.x - moveEvt.clientX,
+      y: startCoordinates.y - moveEvt.clientY
+    };
+
+    startCoordinates = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    setup.style.top = (setup.offsetTop - shift.y) + 'px';
+    setup.style.left = (setup.offsetLeft - shift.x) + 'px';
+  };
+
+  var dialogMouseupHandler = function (upEvt) {
+
+    upEvt.preventDefault();
+
+    document.removeEventListener('mousemove', dialogMousemoveHandler);
+    document.removeEventListener('mouseup', dialogMouseupHandler);
+
+    if (dragged) {
+
+      var dialogClickPreventDefaultHandler = function (evt) {
+
+        evt.preventDefault();
+        dialog.removeEventListener('click', dialogClickPreventDefaultHandler);
+      };
+      dialog.addEventListener('click', dialogClickPreventDefaultHandler);
+    }
+  };
+
+  document.addEventListener('mousemove', dialogMousemoveHandler);
+  document.addEventListener('mouseup', dialogMouseupHandler);
+};
+
+dialog.addEventListener('mousedown', dialogMousedownHandler);
+
+var shopArtifact = document.querySelector('.setup-artifacts-shop');
+var draggedItem = null;
+
+var shopArtifactDragstartHandler = function (evt) {
+
+  if (evt.target.tagName.toLowerCase() === 'img') {
+
+    draggedItem = evt.target;
+    evt.dataTransfer.setData('text/plain', evt.target.alt);
+  }
+};
+
+shopArtifact.addEventListener('dragstart', shopArtifactDragstartHandler);
+
+var magicianBag = document.querySelector('.setup-artifacts');
+
+var magicianBagDragoverHandler = function (evt) {
+
+  evt.preventDefault();
+  return false;
+};
+
+magicianBag.addEventListener('dragover', magicianBagDragoverHandler);
+
+var magicianBagDropHandler = function (evt) {
+
+  evt.target.style.backgroundColor = '';
+  evt.target.appendChild(draggedItem.cloneNode(true));
+  evt.preventDefault();
+};
+
+magicianBag.addEventListener('drop', magicianBagDropHandler);
+
+var magicianBagDragenterHandler = function (evt) {
+
+  evt.target.style.backgroundColor = 'pink';
+  evt.preventDefault();
+};
+
+magicianBag.addEventListener('dragenter', magicianBagDragenterHandler);
+
+var magicianBagDragleaveHandler = function (evt) {
+
+  evt.target.style.backgroundColor = '';
+  evt.preventDefault();
+};
+
+magicianBag.addEventListener('dragleave', magicianBagDragleaveHandler);
